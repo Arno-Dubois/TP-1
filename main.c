@@ -15,6 +15,7 @@ int createID() {
 }
 
 int searchTask(int taskID) {
+    if(!(100000 <= taskID && taskID <= 999999)) return -1;
     for (int i = 0; i<1024; ++i) {
         if (taskList[i].ID == taskID) {
             return i;
