@@ -28,48 +28,63 @@ void addTask() {
     printf("Comment voulez vous appeler votre tâche?\n");
     fgets(choice, 1024, stdin);
 
+    //Remove \n
+    char *src, *dst;
+    for (src = dst = choice; *src != '\0'; src++) {
+        *dst = *src;
+        if (*dst != '\n') dst++;
+    }
+    *dst = '\0';
+
     taskList[taskNumber].ID = createID();
-    strcmp(taskList[taskNumber].name, choice);
+    strcpy(taskList[taskNumber].name, choice);
     taskList[taskNumber].isDone = 0;
     taskNumber++;
 
-    printf("Tâche %s crée avec succés !\n", choice);
+    printf("Tâche \"%s\" crée avec succés !\n\n", choice);
 }
 
 void listAllTask() {
     printf("Liste de toutes les tâches : \n");
     for (int i = 0; i < 1024; ++i) {
-        printf("Identifiant : %d | \edone\" : %d | nom : %s\n", taskList[i].ID,taskList[i].isDone , taskList[i].name);
+        if(taskList[i].ID != 0)
+            printf("Identifiant : %d | \"done\" : %d | nom : %s\n", taskList[i].ID,taskList[i].isDone , taskList[i].name);
     };
+    printf("\n");
 }
 
 void listRemainingTask() {
     printf("Liste des tâches réstante : \n");
     for (int i = 0; i < 1024; ++i) {
-        if(taskList[i].isDone == 0)
-            printf("Identifiant : %d | nom : %s\n", taskList[i].ID,taskList[i].isDone , taskList[i].name);
+        if(taskList[i].ID != 0 && taskList[i].isDone == 0)
+            printf("Identifiant : %d | nom : %s\n", taskList[i].ID, taskList[i].name);
     };
+    printf("\n");
 }
 
 void listFinishedTask() {
     printf("Liste des tâches finie : \n");
     for (int i = 0; i < 1024; ++i) {
-        if(taskList[i].isDone == 1)
-            printf("Identifiant : %d | nom : %s\n", taskList[i].ID,taskList[i].isDone , taskList[i].name);
+        if(taskList[i].ID != 0 && taskList[i].isDone == 1)
+            printf("Identifiant : %d | nom : %s\n", taskList[i].ID, taskList[i].name);
     };
+    printf("\n");
 }
 
 void finishTask() {
     int choice;
     listRemainingTask();
-    printf("Quelle tâche voulez vous marquer comme \"done\" ?(préciser son isdentifiant)");
+    printf("Quelle tâche voulez vous marquer comme \"done\" ?(préciser son identifiant)\n");
     scanf("%d", &choice);
 
     int taskPlace = searchTask(choice);
     if(taskPlace == -1)
-        printf("Identifiant de tâche invalide !");
-    else
+        printf("Identifiant de tâche invalide !\n");
+    else {
         taskList[taskPlace].isDone = 1;
+        printf("La tâche %s est marqué comme \"done\" !\n\n", taskList[taskPlace].name);
+    }
+    getchar();
 }
 
 
