@@ -79,12 +79,13 @@ void finishTask() {
 
     int taskPlace = searchTask(choice);
     if(taskPlace == -1)
-        printf("Identifiant de tâche invalide !\n");
+        printf("Identifiant de tâche invalide !");
     else {
         taskList[taskPlace].isDone = 1;
-        printf("La tâche %s est marqué comme \"done\" !\n\n", taskList[taskPlace].name);
+        printf("La tâche %s est marqué comme \"done\" !", taskList[taskPlace].name);
     }
     getchar();
+    printf("\n\n");
 }
 
 
@@ -115,7 +116,9 @@ int main() {
                 break;
             case 'q': return 0;
             default:
-                printf("Mauvaise entrée veuillez réessayer\n");
+                printf("Mauvaise entrée veuillez réessayer\n\n");
+                input=' ';
+                getchar();
         }
     }
 
